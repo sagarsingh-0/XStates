@@ -22,9 +22,7 @@ export default function App() {
   useEffect(() => {
     if (selectedCountry) {
       axios
-        .get(
-            `https://crio-location-selector.onrender.com/countries/${selectedCountry}/states/${selectedState}/cities`
-            )
+        .get(`https://crio-location-selector.onrender.com/country=${selectedCountry}/states`)
         .then((res) => {
           setStates(res.data);
           setCities([]);
@@ -40,9 +38,7 @@ export default function App() {
   useEffect(() => {
     if (selectedCountry && selectedState) {
       axios
-        .get(
-            `https://crio-location-selector.onrender.com/countries/${selectedCountry}/states/${selectedState}/cities`
-            )
+        .get(`https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${selectedState}/cities`)
         .then((res) => {
           setCities(res.data);
           setSelectedCity("");
@@ -65,45 +61,41 @@ export default function App() {
           <option value="" disabled>
             Select Country
           </option>
-          {countries.map((country) => {
-            return (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            );
-          })}
+          {countries.map((country) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
         </select>
         <select
           value={selectedState}
           onChange={(e) => setSelectedState(e.target.value)}
           className="dropdown"
+          disabled={!selectedCountry}
         >
           <option value="" disabled>
             Select State
           </option>
-          {states.map((state) => {
-            return (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            );
-          })}
+          {states.map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
         </select>
         <select
           value={selectedCity}
           onChange={(e) => setSelectedCity(e.target.value)}
           className="dropdown"
+          disabled={!selectedCountry || !selectedState}
         >
           <option value="" disabled>
             Select City
           </option>
-          {cities.map((city) => {
-            return (
-              <option key={city} value={city}>
-                {city}
-              </option>
-            );
-          })}
+          {cities.map((city) => (
+            <option key={city} value={city}>
+              {city}
+            </option>
+          ))}
         </select>
       </div>
       {selectedCity && (
