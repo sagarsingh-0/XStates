@@ -23,8 +23,8 @@ export default function App() {
     if (selectedCountry) {
       axios
         .get(
-          `https://crio-location-selector.onrender.com/country=${selectedCountry}/states`
-        )
+            `https://crio-location-selector.onrender.com/countries/${selectedCountry}/states/${selectedState}/cities`
+            )
         .then((res) => {
           setStates(res.data);
           setCities([]);
@@ -41,8 +41,8 @@ export default function App() {
     if (selectedCountry && selectedState) {
       axios
         .get(
-          `https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${selectedState}/cities`
-        )
+            `https://crio-location-selector.onrender.com/countries/${selectedCountry}/states/${selectedState}/cities`
+            )
         .then((res) => {
           setCities(res.data);
           setSelectedCity("");
